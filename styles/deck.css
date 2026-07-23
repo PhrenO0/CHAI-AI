@@ -394,11 +394,54 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.18; letter-spacing:
 .tags { display: flex; flex-wrap: wrap; gap: 10px; }
 .tag-pill { border: 1.5px solid rgba(255,255,255,.25); border-radius: var(--r-pill); padding: 9px 18px; font-size: 14px; color: #e7e7ea; }
 
+/* ---------- 21. 편집 도구 (수정 모드) ---------- */
+.toolbar {
+  position: fixed; top: 18px; right: 18px; z-index: 999;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--ink); color: #fff; border-radius: var(--r-pill);
+  padding: 8px 10px 8px 18px; box-shadow: 0 14px 34px rgba(0,0,0,.35);
+  font-family: var(--sans);
+}
+.toolbar__label { font-size: 12.5px; font-weight: 700; letter-spacing: .04em; color: #9a9ba1; margin-right: 4px; }
+.toolbar button {
+  font-family: var(--sans); font-size: 13px; font-weight: 700; cursor: pointer;
+  border: none; border-radius: var(--r-pill); padding: 8px 15px;
+  background: rgba(255,255,255,.12); color: #fff; transition: background .15s;
+  white-space: nowrap;
+}
+.toolbar button:hover { background: rgba(255,255,255,.22); }
+.toolbar button.on { background: var(--blue); }
+.toolbar button.danger:hover { background: var(--red); }
+.toolbar__status { font-size: 11px; color: #8a8b90; min-width: 84px; padding-right: 4px; }
+
+body.edit-mode .ed-text {
+  cursor: text; outline: 1px dashed transparent; outline-offset: 3px;
+  border-radius: 4px; transition: outline-color .12s, background-color .12s;
+}
+body.edit-mode .ed-text:hover { outline-color: rgba(0,87,255,.4); background: rgba(0,87,255,.05); }
+body.edit-mode .ed-text:focus { outline: 2px solid var(--blue); outline-offset: 3px; background: rgba(0,87,255,.07); }
+
+body.edit-mode .imgframe { cursor: pointer; }
+.imgframe__hint {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,87,255,.85); color: #fff; font-size: 12.5px; font-weight: 700;
+  opacity: 0; transition: opacity .15s; text-align: center; padding: 14px; line-height: 1.4; z-index: 1;
+}
+body.edit-mode .imgframe:hover .imgframe__hint { opacity: 1; }
+.imgframe.dragover .imgframe__hint { opacity: 1; }
+.imgframe img.uploaded { width: 100%; height: 100%; object-fit: cover; display: block; }
+.imgframe__remove {
+  position: absolute; top: 6px; right: 6px; width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(0,0,0,.6); color: #fff; border: none; font-size: 14px; line-height: 1;
+  cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 2;
+}
+body.edit-mode .imgframe:hover .imgframe__remove { display: flex; }
+
 /* ---------- 인쇄 ---------- */
 @media print {
   @page { size: 1280px 720px; margin: 0; }
   body { background: #fff; }
   .deck { gap: 0; padding: 0; zoom: 1 !important; }
   .slide { box-shadow: none; transform: none !important; page-break-after: always; break-after: page; }
-  .no-print { display: none !important; }
+  .no-print, .toolbar, .imgframe__hint, .imgframe__remove { display: none !important; }
 }
