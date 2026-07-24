@@ -394,7 +394,83 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.18; letter-spacing:
 .tags { display: flex; flex-wrap: wrap; gap: 10px; }
 .tag-pill { border: 1.5px solid rgba(255,255,255,.25); border-radius: var(--r-pill); padding: 9px 18px; font-size: 14px; color: #e7e7ea; }
 
-/* ---------- 21. 편집 도구 (수정 모드) ---------- */
+/* ---------- 21. 초안 표시 태그 (내가 채운 문구 = 교체 대상) ---------- */
+.draft {
+  display: inline-block; font-size: 10.5px; font-weight: 700; vertical-align: middle;
+  color: #9a6a00; background: #fff6e5; border: 1px dashed #e6bd77;
+  border-radius: var(--r-pill); padding: 1px 9px; margin-left: 6px; letter-spacing: .01em;
+}
+.draft::before { content: "초안"; }
+.draft--full { margin-left: 0; }
+.slide--dark .draft { color: #ffd591; background: rgba(255,213,145,.12); border-color: rgba(255,213,145,.4); }
+
+/* ---------- 22. 마스킹 경쟁사 2x2 (브랜드명 박스 위 중앙) ---------- */
+.cwall { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 22px; }
+.cwall__cell { display: flex; flex-direction: column; gap: 9px; }
+.cwall__brand { text-align: center; font-size: 14.5px; font-weight: 800; color: var(--ink); letter-spacing: .01em; }
+.cwall__box {
+  background: var(--parchment); border: 1px solid var(--hair-soft); border-radius: var(--r-md);
+  padding: 15px 18px; font-size: 14px; line-height: 1.55; color: var(--body); flex: 1 1 auto;
+}
+.commonwords { display: flex; flex-wrap: wrap; gap: 8px; }
+.commonwords span { font-size: 12.5px; color: var(--muted); background: #fff; border: 1px solid var(--hair); border-radius: var(--r-pill); padding: 5px 12px; }
+
+/* ---------- 23. 회색 오버레이 리빌 ---------- */
+.reveal { position: relative; }
+.reveal .thumbs, .reveal .thumbs-grid { filter: grayscale(100%); opacity: .3; }
+.reveal__veil { position: absolute; inset: -12px; background: rgba(245,245,247,.72); backdrop-filter: blur(1px); }
+.reveal__msg {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; gap: 14px; padding: 0 8%;
+}
+.thumbs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.thumbs-grid .imgframe { aspect-ratio: 16/10; font-size: 11px; }
+
+/* ---------- 24. 우상향 시장 그래프 ---------- */
+.trend { position: relative; }
+.trend svg { width: 100%; height: auto; display: block; overflow: visible; }
+.trend__cap { font-size: 12.5px; color: var(--muted); }
+.trend__pill {
+  display: inline-flex; align-items: center; gap: 6px; background: var(--blue-wash); color: var(--blue);
+  border-radius: var(--r-pill); padding: 6px 14px; font-size: 13px; font-weight: 700;
+}
+
+/* ---------- 25. 절차 비교 (편리함) ---------- */
+.proc { display: grid; grid-template-columns: 1fr 64px 1fr; gap: 0 20px; align-items: stretch; }
+.proc__col { display: flex; flex-direction: column; gap: 0; }
+.proc__head { font-size: 13px; font-weight: 800; letter-spacing: .02em; margin-bottom: 10px; }
+.proc__col--now .proc__head { color: var(--muted); }
+.proc__col--after .proc__head { color: var(--blue); }
+.proc__step { display: flex; align-items: center; gap: 11px; padding: 8.5px 0; font-size: 14px; color: var(--body); border-bottom: 1px solid var(--hair-soft); }
+.proc__num { width: 22px; height: 22px; border-radius: 50%; background: var(--hair); color: var(--muted); font-size: 11px; font-weight: 700; display: grid; place-items: center; flex: 0 0 auto; }
+.proc__col--after .proc__num { background: var(--blue); color: #fff; }
+.proc__mid { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.proc__arrow { color: var(--blue); font-size: 22px; }
+.proc__save { font-size: 12px; font-weight: 800; color: var(--blue); text-align: center; line-height: 1.3; }
+.proc__save b { font-size: 22px; display: block; }
+
+/* ---------- 26. 스토리보드 스트립 ---------- */
+.sb { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.sb__cell { display: flex; flex-direction: column; gap: 9px; }
+.sb__cut { font-size: 11px; font-weight: 800; color: var(--blue); }
+.sb__cap { font-size: 12px; color: var(--muted); line-height: 1.4; }
+.sb .imgframe { aspect-ratio: 4/3; font-size: 11px; }
+
+/* ---------- 27. LTV / 락인 흐름 ---------- */
+.ltv { display: grid; grid-template-columns: 1fr 44px 1fr 44px 1fr; align-items: stretch; }
+.ltv__node {
+  background: var(--parchment); border-radius: var(--r-lg); padding: 22px 20px;
+  display: flex; flex-direction: column; gap: 8px; justify-content: center;
+}
+.ltv__node--end { background: var(--blue); }
+.ltv__node--end .ltv__t, .ltv__node--end .ltv__d { color: #fff; }
+.ltv__k { font-size: 12px; font-weight: 800; color: var(--blue); letter-spacing: .04em; }
+.ltv__node--end .ltv__k { color: rgba(255,255,255,.85); }
+.ltv__t { font-size: 17px; font-weight: 700; color: var(--ink); }
+.ltv__d { font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+.ltv__arr { display: grid; place-items: center; color: var(--blue); font-size: 20px; }
+
+/* ---------- 28. 편집 도구 (수정 모드) ---------- */
 .toolbar {
   position: fixed; top: 18px; right: 18px; z-index: 999;
   display: flex; align-items: center; gap: 8px;
