@@ -521,3 +521,15 @@ body.edit-mode .imgframe:hover .imgframe__remove { display: flex; }
   .slide { box-shadow: none; transform: none !important; page-break-after: always; break-after: page; }
   .no-print, .toolbar, .imgframe__hint, .imgframe__remove { display: none !important; }
 }
+
+/* ---------- 24. 대화형 시나리오 (08) ---------- */
+.chat { display: flex; flex-direction: column; gap: 14px; }
+.chat__row { display: flex; }
+.chat__row--q { justify-content: flex-start; }
+.chat__row--a { justify-content: flex-end; }
+.chat__b {
+  max-width: 78%; padding: 14px 18px; border-radius: 18px;
+  font-size: 14.5px; line-height: 1.55;
+}
+.chat__b--q { background: var(--blue); color: #fff; font-weight: 700; border-bottom-left-radius: 5px; }
+.chat__b--a { background: var(--parchment); color: var(--ink); border: 1px solid var(--hair); border-bottom-right-radius: 5px; }
