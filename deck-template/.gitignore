@@ -1,0 +1,4 @@
+build/node_modules/
+build/out/
+build/qa/out/
+build/qa/pptx/
