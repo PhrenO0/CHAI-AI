@@ -10,7 +10,9 @@ const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 
-const DECK = 'file://' + path.resolve(__dirname, '../../index.html');
+const DECK = process.env.DECK
+  ? 'file://' + path.resolve(process.env.DECK)
+  : 'file://' + path.resolve(__dirname, '../../index.html');
 const OUT = path.resolve(__dirname, 'out');
 const CHROME = process.env.CHROME_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const only = process.argv[2];

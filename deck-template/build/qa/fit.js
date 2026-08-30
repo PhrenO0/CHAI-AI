@@ -17,7 +17,9 @@
 const path = require('path');
 const { chromium } = require('playwright');
 
-const DECK = 'file://' + path.resolve(__dirname, '../../index.html');
+const DECK = process.env.DECK
+  ? 'file://' + path.resolve(process.env.DECK)
+  : 'file://' + path.resolve(__dirname, '../../index.html');
 const CHROME = process.env.CHROME_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const WARN = Number(process.env.WARN_GAP || 10);
 

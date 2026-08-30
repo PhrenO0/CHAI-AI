@@ -14,7 +14,9 @@
 const path = require('path');
 const { chromium } = require('playwright');
 
-const DECK = 'file://' + path.resolve(__dirname, '../../index.html');
+const DECK = process.env.DECK
+  ? 'file://' + path.resolve(process.env.DECK)
+  : 'file://' + path.resolve(__dirname, '../../index.html');
 const CHROME = process.env.CHROME_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const id = process.argv[2];
 if (!id) { console.error('usage: node meas.js <slideId>   e.g. s16'); process.exit(2); }

@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 교양의 이해 · 생성형 AI, 답변에서 실행으로</title>
+<link rel="stylesheet" href="styles/deck.css">
+</head>
+<body>
+<!--
+  ============================================================
+  AI 교양의 이해 - 수업 자료 18장
+  ------------------------------------------------------------
+  원본 PDF의 문구·수치·주의 문구를 그대로 옮겼다.
+  12~13장의 n=120 설문은 원본에서 가상 데이터로 명시된 값이므로
+  그 표시를 반드시 유지한다.
+  ============================================================
+-->
+<div class="toolbar no-print" id="toolbar" title="내보내기 결과물은 같은 폴더의 styles/deck.css를 참조합니다. 폴더째로 보관하세요.">
+  <span class="toolbar__label">편집</span>
+  <button type="button" id="btnEdit">수정 모드</button>
+  <button type="button" id="btnHl">강조</button>
+  <button type="button" id="btnExport">내보내기</button>
+  <button type="button" id="btnReset" class="danger">초기화</button>
+  <span class="toolbar__status" id="saveStatus"></span>
+</div>
+<input type="file" id="imgUploadInput" accept="image/*" style="display:none">
+
+<div class="deck" id="deckRoot">
+
+<!-- ============================================================
+     01 · 표지
+     ============================================================ -->
+<section class="slide slide--dark" id="s01">
+  <div class="slide__inner col between">
+    <div class="row between center">
+      <div class="small" style="color:#8a8b90">AI101 · LECTURE 03</div>
+      <div class="eyebrow">수업용 예시 자료</div>
+    </div>
+
+    <div class="col" style="gap:20px; margin:auto 0">
+      <h1 class="h-hero" style="font-size:62px">AI 교양의 이해</h1>
+      <h2 class="h-lg" style="color:var(--blue-on-dark); font-weight:700">생성형 AI, 답변에서 실행으로</h2>
+      <p class="lead" style="color:#a6a7ac; max-width:640px">대학생의 학습 · 검증 · 책임을 중심으로</p>
+    </div>
+
+    <div class="row between center">
+      <span class="small" style="color:#8a8b90">PDF → 인터랙티브 학습 페이지 변환 실험용</span>
+      <span class="small" style="color:#8a8b90">2026.08</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     02 · 오늘의 질문
+     레이아웃: 대형 문장 + 우측 관점 3
+     ============================================================ -->
+<section class="slide" id="s02">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">TODAY’S QUESTION</span></div>
+    </div>
+
+    <div class="row" style="gap:56px; align-items:flex-start; margin:auto 0">
+      <div class="fill col" style="gap:28px">
+        <p class="pullquote" style="font-size:34px">AI가 과제를 대신하면,<br><span class="q">나는 무엇을 배운 것일까?</span></p>
+        <p class="body" style="max-width:640px">생성형 AI의 핵심은 더 빠른 답이 아니라, 무엇을 위임하고 무엇을 직접 판단할지 결정하는 능력이다.</p>
+      </div>
+
+      <div style="width:330px; flex:0 0 auto">
+        <div class="card__k" style="margin-bottom:16px">수업의 관점</div>
+        <div class="col" style="gap:10px">
+          <div class="card card--flat" style="padding:16px 20px"><span class="body" style="font-weight:700; color:var(--ink)">기능보다 사용 과정</span></div>
+          <div class="card card--flat" style="padding:16px 20px"><span class="body" style="font-weight:700; color:var(--ink)">결과보다 검증 가능성</span></div>
+          <div class="card" style="padding:16px 20px; background:var(--blue-wash); border-color:var(--blue)"><span class="body" style="font-weight:700; color:var(--blue)">대체보다 판단 확장</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">02</div>
+</section>
+
+<!-- ============================================================
+     03 · 학습 목표
+     레이아웃: 넘버드 카드 3
+     ============================================================ -->
+<section class="slide" id="s03">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">LEARNING GOALS</span></div>
+      <h2 class="h-md">오늘의 학습 목표</h2>
+      <p class="small">수업이 끝난 뒤 스스로 설명하고 적용할 수 있어야 하는 세 가지</p>
+    </div>
+
+    <div class="g3 grid" style="gap:26px">
+      <div class="card" style="display:flex; flex-direction:column; gap:14px">
+        <div class="numbadge">1</div>
+        <div class="h-md" style="font-size:22px">작동 원리</div>
+        <p class="small" style="line-height:1.6">생성형 AI가 확률적으로 결과를 구성한다는 사실을 설명</p>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; gap:14px">
+        <div class="numbadge">2</div>
+        <div class="h-md" style="font-size:22px">활용 판단</div>
+        <p class="small" style="line-height:1.6">검색 · 변환 · 실행 중 과제에 적합한 사용 방식을 선택</p>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; gap:14px; border-color:var(--blue); border-width:1.5px">
+        <div class="numbadge" style="background:var(--blue)">3</div>
+        <div class="h-md" style="font-size:22px">검증 책임</div>
+        <p class="small" style="line-height:1.6">출처 · 수치 · 추론을 구분하고 결과의 한계를 표시</p>
+      </div>
+    </div>
+
+    <div class="handoff"><b>다음</b><span>먼저 이 시스템이 무엇을 하는 물건인지부터 본다.</span></div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">03</div>
+</section>
+
+<!-- ============================================================
+     04 · 개념 01 · 생성형 AI란
+     레이아웃: 인용 + 본문 + 태그 / 우측 부등호 대조
+     ============================================================ -->
+<section class="slide" id="s04">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">CONCEPT 01</span></div>
+      <h2 class="h-md">생성형 AI란 무엇인가</h2>
+      <p class="small">학습된 패턴을 바탕으로 요청에 맞는 새로운 결과를 구성하는 시스템</p>
+    </div>
+
+    <div class="row" style="gap:44px; align-items:flex-start">
+      <div class="fill col" style="gap:22px">
+        <p class="quote-real" style="font-size:22px">그럴듯한 다음 단위를 예측해 결과를 만든다.</p>
+        <p class="body" style="max-width:640px">텍스트 모델은 문장을 통째로 기억해 꺼내기보다, 입력된 맥락에서 다음 토큰의 확률을 계산한다. 따라서 유창함은 사실성의 증거가 아니며, 같은 요청에서도 결과가 달라질 수 있다.</p>
+        <div class="commonwords">
+          <span>확률적 생성</span><span>맥락 의존</span><span>결과 변동</span>
+        </div>
+      </div>
+
+      <div style="width:320px; flex:0 0 auto">
+        <div class="card__k" style="margin-bottom:14px">핵심 구분</div>
+        <div class="col" style="gap:12px">
+          <div class="card card--flat neq" style="padding:18px 20px">
+            <span class="neq__a">유창한 문장</span>
+            <span class="neq__b">≠ 검증된 사실</span>
+          </div>
+          <div class="card card--flat neq" style="padding:18px 20px">
+            <span class="neq__a">높은 성능</span>
+            <span class="neq__b">≠ 무오류</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">04</div>
+</section>
+
+<!-- ============================================================
+     05 · 개념 02 · 네 단계
+     레이아웃: 4단계 흐름 + 하단 공식 바
+     ============================================================ -->
+<section class="slide slide--parchment" id="s05">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">CONCEPT 02</span></div>
+      <h2 class="h-md">결과는 <span class="hl">네 단계</span>에서 달라진다</h2>
+      <p class="small">프롬프트만이 아니라 맥락 · 처리 · 검증까지 하나의 작업 설계</p>
+    </div>
+
+    <div class="journey" style="grid-template-columns:repeat(4,1fr)">
+      <div class="jstage"><div class="jstage__bar"></div><div class="jstage__no">INPUT</div><div class="jstage__t">질문 · 목표</div><div class="jstage__d">무엇을 원하는가</div></div>
+      <div class="jstage"><div class="jstage__bar"></div><div class="jstage__no">CONTEXT</div><div class="jstage__t">자료 · 제약</div><div class="jstage__d">무엇을 참고하는가</div></div>
+      <div class="jstage"><div class="jstage__bar"></div><div class="jstage__no">PROCESS</div><div class="jstage__t">추론 · 도구</div><div class="jstage__d">어떻게 수행하는가</div></div>
+      <div class="jstage"><div class="jstage__bar"></div><div class="jstage__no">CHECK</div><div class="jstage__t">검증 · 수정</div><div class="jstage__d">무엇을 믿을 것인가</div></div>
+    </div>
+
+    <div class="card" style="background:var(--blue); border-color:var(--blue); text-align:center; padding:22px">
+      <div style="font-size:17px; font-weight:700; color:#fff">좋은 결과 = 좋은 질문 × 충분한 맥락 × 적절한 도구 × 인간의 검증</div>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">05</div>
+</section>
+
+<!-- ============================================================
+     06 · 개념 03 · 세 층위
+     레이아웃: 3열 + 검증 부담 게이지
+     ============================================================ -->
+<section class="slide" id="s06">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">CONCEPT 03</span></div>
+      <h2 class="h-md">AI 활용은 <span class="hl">세 가지 층위</span>로 나뉜다</h2>
+      <p class="small">같은 AI라도 맡기는 일의 범위에 따라 위험과 책임이 달라짐</p>
+    </div>
+
+    <div class="g3 grid" style="gap:24px">
+      <div class="card" style="display:flex; flex-direction:column; gap:12px">
+        <div class="h-md" style="font-size:24px">검색</div>
+        <p class="small">정보를 찾고 비교</p>
+        <div style="margin-top:2px">
+          <div class="li" style="font-size:14px; padding:5px 0">논문 후보 찾기</div>
+          <div class="li" style="font-size:14px; padding:5px 0">개념 차이 설명</div>
+        </div>
+        <div class="gauge mt-a" style="padding-top:14px">
+          <div class="gauge__top"><span class="small">검증 부담</span><span class="small" style="font-weight:700; color:var(--ink)">낮음</span></div>
+          <div class="gauge__track"><div class="gauge__fill" style="width:28%"></div></div>
+        </div>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; gap:12px">
+        <div class="h-md" style="font-size:24px">변환</div>
+        <p class="small">형식을 바꾸고 재구성</p>
+        <div style="margin-top:2px">
+          <div class="li" style="font-size:14px; padding:5px 0">PDF → 퀴즈</div>
+          <div class="li" style="font-size:14px; padding:5px 0">표 → 발표 구조</div>
+        </div>
+        <div class="gauge mt-a" style="padding-top:14px">
+          <div class="gauge__top"><span class="small">검증 부담</span><span class="small" style="font-weight:700; color:var(--ink)">중간</span></div>
+          <div class="gauge__track"><div class="gauge__fill" style="width:58%"></div></div>
+        </div>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; gap:12px; border-color:var(--blue); border-width:1.5px">
+        <div class="h-md" style="font-size:24px; color:var(--blue)">실행</div>
+        <p class="small">도구를 사용해 과업 수행</p>
+        <div style="margin-top:2px">
+          <div class="li" style="font-size:14px; padding:5px 0">메일 초안 작성</div>
+          <div class="li" style="font-size:14px; padding:5px 0">웹페이지 생성</div>
+        </div>
+        <div class="gauge mt-a" style="padding-top:14px">
+          <div class="gauge__top"><span class="small">검증 부담</span><span class="small" style="font-weight:800; color:var(--blue)">높음</span></div>
+          <div class="gauge__track"><div class="gauge__fill" style="width:92%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="handoff"><b>다음</b><span>맡기는 범위가 넓어지면 도구의 성격 자체가 달라진다.</span></div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">06</div>
+</section>
+
+<!-- ============================================================
+     07 · 전환 · 답변형에서 실행형으로
+     레이아웃: Before / After
+     ============================================================ -->
+<section class="slide" id="s07">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">SHIFT</span></div>
+      <h2 class="h-md">답변형 AI에서 <span class="hl">실행형 AI</span>로</h2>
+      <p class="small">사용자의 요청을 계획하고 여러 단계를 연결하는 에이전트형 작업</p>
+    </div>
+
+    <div class="ba">
+      <div class="ba__col ba__then">
+        <div class="ba__k">Assistant</div>
+        <div class="h-md" style="font-size:23px; margin-bottom:14px">질문 → 답변</div>
+        <div class="li">한 번의 요청과 한 번의 응답</div>
+        <div class="li">최종 실행은 사용자가 수행</div>
+      </div>
+      <div class="ba__arrow">→</div>
+      <div class="ba__col ba__now">
+        <div class="ba__k">Agent</div>
+        <div class="h-md" style="font-size:23px; margin-bottom:14px; color:#fff">목표 → 계획 → 실행</div>
+        <div class="li">도구 사용과 여러 단계 연결</div>
+        <div class="li">실패 시 경로 수정과 재시도</div>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--blue-wash); border-color:var(--blue); text-align:center; padding:18px">
+      <div style="font-size:15px; font-weight:700; color:var(--blue)">실행 범위가 넓을수록 권한 · 기록 · 검수 설계가 더 중요</div>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">07</div>
+</section>
+
+<!-- ============================================================
+     08 · 사례
+     레이아웃: 좌 불릿 + 우 데모 목록
+     ============================================================ -->
+<section class="slide" id="s08">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">CASE STUDY</span></div>
+      <h2 class="h-md">사례: Gemini 3.7 Flash</h2>
+      <p class="small">Google이 코딩과 에이전트 작업을 위한 ‘workhorse model’로 소개한 모델</p>
+    </div>
+
+    <div class="row" style="gap:40px; align-items:flex-start">
+      <div class="fill">
+        <div class="card__k" style="color:var(--blue); margin-bottom:12px">핵심 변화는 ‘속도’보다 작업 범위</div>
+        <div class="li">복수 단계 계획과 도구 호출에 더 많은 연산 배분</div>
+        <div class="li">막힘에 적응하고 사용자의 의도를 다시 확인</div>
+        <div class="li">초기 결과의 완성도를 높여 수동 재시도 감소 지향</div>
+        <p class="small" style="margin-top:18px">발표일 2026.08.13 · Google 공식 블로그 기준</p>
+      </div>
+
+      <div style="width:390px; flex:0 0 auto">
+        <div class="card__k" style="margin-bottom:14px">공식 데모의 작업</div>
+        <div class="col" style="gap:10px">
+          <div class="card card--flat" style="padding:15px 20px"><span class="body" style="font-weight:700; color:var(--ink)">텍스트 → 3D 게임</span></div>
+          <div class="card card--flat" style="padding:15px 20px"><span class="body" style="font-weight:700; color:var(--ink)">프롬프트 → 랜딩페이지</span></div>
+          <div class="card card--flat" style="padding:15px 20px"><span class="body" style="font-weight:700; color:var(--ink)">PDF → 데이터 스토리</span></div>
+          <div class="card card--flat" style="padding:15px 20px"><span class="body" style="font-weight:700; color:var(--ink)">멀티에이전트 로봇 작업</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">08</div>
+</section>
+
+<!-- ============================================================
+     09 · 수치
+     레이아웃: 표 + 주의 + 출처
+     ============================================================ -->
+<section class="slide" id="s09">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">DATA</span></div>
+      <h2 class="h-md">수치로 읽는 변화</h2>
+      <p class="small">서로 다른 벤치마크는 각각의 단위 안에서만 비교해야 함</p>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr><th>평가 항목</th><th class="num">3.6 Flash</th><th class="num">3.7 Flash</th><th class="num">변화</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="key">FrontierCode 1.1 Main</td><td class="num">34.4%</td><td class="num">43.6%</td><td class="num up">+9.2%p</td></tr>
+        <tr><td class="key">DeepSWE v1.1</td><td class="num">49.0%</td><td class="num">65.3%</td><td class="num up">+16.3%p</td></tr>
+        <tr><td class="key">WebDev Arena</td><td class="num">1538 Elo</td><td class="num">1588 Elo</td><td class="num up">+50 Elo</td></tr>
+        <tr><td class="key">GDP.pdf</td><td class="num">22.0%</td><td class="num">34.0%</td><td class="num up">+12.0%p</td></tr>
+        <tr><td class="key">AutomationBench</td><td class="num">17.0%</td><td class="num">30.4%</td><td class="num up">+13.4%p</td></tr>
+      </tbody>
+    </table>
+
+    <div class="row between center">
+      <span class="tbd">주의 : 정확도(%)와 Elo는 단위가 다르므로 항목 간 평균이나 합산이 불가능하다</span>
+      <span class="src">출처 : Google, 2026.08.13</span>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">09</div>
+</section>
+
+<!-- ============================================================
+     10 · 비판적 읽기
+     레이아웃: 카드 4 + 하단 질문
+     ============================================================ -->
+<section class="slide slide--parchment" id="s10">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">CRITICAL READING</span></div>
+      <h2 class="h-md">벤치마크가 말해주지 않는 것</h2>
+      <p class="small">점수 상승은 사용자의 모든 과제에서 같은 폭의 향상을 보장하지 않음</p>
+    </div>
+
+    <div class="g2 grid" style="gap:20px 26px">
+      <div class="card">
+        <div class="h-md" style="font-size:20px">대표성</div>
+        <p class="small" style="margin-top:8px">시험 문제가 실제 대학 과제와 얼마나 닮았는가</p>
+      </div>
+      <div class="card">
+        <div class="h-md" style="font-size:20px">재현성</div>
+        <p class="small" style="margin-top:8px">같은 조건에서 결과가 반복되는가</p>
+      </div>
+      <div class="card">
+        <div class="h-md" style="font-size:20px">비용</div>
+        <p class="small" style="margin-top:8px">좋은 결과를 얻기 위한 시간 · 토큰 · 수정 횟수</p>
+      </div>
+      <div class="card">
+        <div class="h-md" style="font-size:20px">책임</div>
+        <p class="small" style="margin-top:8px">틀린 결과가 실행됐을 때 누가 발견하고 수정하는가</p>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--ink); border-color:var(--ink); text-align:center; padding:18px">
+      <div style="font-size:16px; font-weight:700; color:#fff">좋은 질문 : ‘몇 점 올랐나?’보다 <span style="color:var(--blue-on-dark)">‘내 과제에서 어떤 실패가 줄었나?’</span></div>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">10</div>
+</section>
+
+<!-- ============================================================
+     11 · 적용
+     레이아웃: 4행 대응표 (상황 → 변환 → 검증)
+     ============================================================ -->
+<section class="slide" id="s11">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">APPLICATION</span></div>
+      <h2 class="h-md">대학생 과제에 적용한다면</h2>
+      <p class="small">AI를 쓰는 목적보다 검증 가능한 산출물을 먼저 정의</p>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr><th style="width:150px">상황</th><th>변환</th><th style="width:340px">검증</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="key">강의자료</td><td>PDF → 핵심 개념 지도</td><td style="color:var(--blue); font-weight:700">페이지별 근거 표시</td></tr>
+        <tr><td class="key">시험 준비</td><td>개념 → 오답 중심 퀴즈</td><td style="color:var(--blue); font-weight:700">정답 · 해설 원문 대조</td></tr>
+        <tr><td class="key">팀 프로젝트</td><td>조사자료 → 데이터 스토리</td><td style="color:var(--blue); font-weight:700">수치 · 단위 · 출처 검수</td></tr>
+        <tr><td class="key">취업 준비</td><td>경험 → 직무별 증거 정리</td><td style="color:var(--blue); font-weight:700">과장 · 허위 경험 제거</td></tr>
+      </tbody>
+    </table>
+
+    <div class="handoff"><b>다음</b><span>그 검증을 무엇으로 판단할지, 수업용 데이터로 확인한다.</span></div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">11</div>
+</section>
+
+<!-- ============================================================
+     12 · 가상 설문 · 주 사용 목적
+     레이아웃: 가로 막대 + 유용성 표
+     ※ 원본에서 가상 데이터로 명시. 표시를 지우지 않는다.
+     ============================================================ -->
+<section class="slide" id="s12">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">SYNTHETIC DATA</span></div>
+      <h2 class="h-md">수업용 가상 설문 · <span class="hl">주 사용 목적</span></h2>
+      <p class="small">AI101 수강생 120명을 가정한 콘텐츠 변환 실습용 데이터</p>
+    </div>
+
+    <div class="row" style="gap:40px; align-items:flex-start">
+      <div class="fill hbar">
+        <div class="hbar__row"><span class="hbar__name">과제 요약</span><span class="hbar__track"><span class="hbar__fill" style="width:100%"></span></span><span class="hbar__val">38명</span></div>
+        <div class="hbar__row"><span class="hbar__name">시험 복습</span><span class="hbar__track"><span class="hbar__fill" style="width:79%"></span></span><span class="hbar__val">30명</span></div>
+        <div class="hbar__row"><span class="hbar__name">아이디어</span><span class="hbar__track"><span class="hbar__fill hbar__fill--soft" style="width:58%"></span></span><span class="hbar__val">22명</span></div>
+        <div class="hbar__row"><span class="hbar__name">취업 문서</span><span class="hbar__track"><span class="hbar__fill hbar__fill--soft" style="width:47%"></span></span><span class="hbar__val">18명</span></div>
+        <div class="hbar__row"><span class="hbar__name">코딩</span><span class="hbar__track"><span class="hbar__fill hbar__fill--soft" style="width:32%"></span></span><span class="hbar__val">12명</span></div>
+      </div>
+
+      <div style="width:330px; flex:0 0 auto">
+        <table class="tbl">
+          <thead><tr><th>목적</th><th class="num">응답자</th><th class="num">유용성 / 5.0</th></tr></thead>
+          <tbody>
+            <tr><td class="key">과제 요약</td><td class="num">38</td><td class="num up">4.2</td></tr>
+            <tr><td class="key">시험 복습</td><td class="num">30</td><td class="num">4.0</td></tr>
+            <tr><td class="key">아이디어</td><td class="num">22</td><td class="num">3.8</td></tr>
+            <tr><td class="key">취업 문서</td><td class="num">18</td><td class="num">3.6</td></tr>
+            <tr><td class="key">코딩</td><td class="num">12</td><td class="num">3.7</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--blue-wash); border-color:var(--blue); padding:18px 24px">
+      <div style="font-size:15px; font-weight:700; color:var(--blue)">과제 요약과 시험 복습이 68명 · 응답의 절반을 넘는다. 쓰임은 이미 ‘요약과 정리’에 몰려 있다</div>
+    </div>
+
+    <div class="row between center">
+      <span class="tbd">실제 조사 결과가 아닌 수업 · 콘텐츠 제작용 가상 데이터</span>
+      <span class="src">n = 120 (가정)</span>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">12</div>
+</section>
+
+<!-- ============================================================
+     13 · 가상 설문 · 검증 습관
+     레이아웃: 분포 막대 + 결론
+     ============================================================ -->
+<section class="slide" id="s13">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">SYNTHETIC DATA</span></div>
+      <h2 class="h-md">수업용 가상 설문 · <span class="hl">검증 습관</span></h2>
+      <p class="small">AI 답변의 출처나 수치를 얼마나 자주 다시 확인하는가</p>
+    </div>
+
+    <div class="hbar">
+      <div class="hbar__row"><span class="hbar__name">항상</span><span class="hbar__track"><span class="hbar__fill" style="width:63%"></span></span><span class="hbar__val">24명 · 20.0%</span></div>
+      <div class="hbar__row"><span class="hbar__name">자주</span><span class="hbar__track"><span class="hbar__fill" style="width:100%"></span></span><span class="hbar__val">38명 · 31.7%</span></div>
+      <div class="hbar__row"><span class="hbar__name">가끔</span><span class="hbar__track"><span class="hbar__fill hbar__fill--soft" style="width:95%"></span></span><span class="hbar__val">36명 · 30.0%</span></div>
+      <div class="hbar__row"><span class="hbar__name">거의 안 함</span><span class="hbar__track"><span class="hbar__fill hbar__fill--soft" style="width:47%"></span></span><span class="hbar__val">18명 · 15.0%</span></div>
+      <div class="hbar__row"><span class="hbar__name">전혀 안 함</span><span class="hbar__track"><span class="hbar__fill hbar__fill--soft" style="width:11%"></span></span><span class="hbar__val">4명 · 3.3%</span></div>
+    </div>
+
+    <div class="row" style="gap:24px; align-items:stretch">
+      <div class="card fill" style="background:var(--blue); border-color:var(--blue); display:flex; align-items:center; padding:20px 26px">
+        <div style="font-size:16px; font-weight:700; color:#fff">‘가끔 이하’ 58명 : 사용 확대와 검증 습관은 별개의 문제</div>
+      </div>
+      <div class="card card--flat" style="width:300px; flex:0 0 auto; padding:18px 22px">
+        <span class="tbd">실제 조사가 아닌 가상 데이터</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">13</div>
+</section>
+
+<!-- ============================================================
+     14 · 실습 · 4단계 검증 프로토콜
+     레이아웃: 4단계 + 하단 문장
+     ============================================================ -->
+<section class="slide" id="s14">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">PRACTICE</span></div>
+      <h2 class="h-md">4단계 검증 프로토콜</h2>
+      <p class="small">AI가 낸 답을 ‘그럴듯한 초안’에서 ‘사용 가능한 결과’로 바꾸는 절차</p>
+    </div>
+
+    <div class="g4 grid" style="gap:18px">
+      <div class="card" style="display:flex; flex-direction:column; gap:12px">
+        <div class="numbadge">1</div>
+        <div class="h-md" style="font-size:21px">분리</div>
+        <p class="small" style="line-height:1.6">사실 · 추론 · 의견을 구분</p>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; gap:12px">
+        <div class="numbadge">2</div>
+        <div class="h-md" style="font-size:21px">추적</div>
+        <p class="small" style="line-height:1.6">수치와 인용의 원문 위치 확인</p>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; gap:12px">
+        <div class="numbadge">3</div>
+        <div class="h-md" style="font-size:21px">반증</div>
+        <p class="small" style="line-height:1.6">반례와 누락된 조건 탐색</p>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; gap:12px; border-color:var(--blue); border-width:1.5px">
+        <div class="numbadge" style="background:var(--blue)">4</div>
+        <div class="h-md" style="font-size:21px">기록</div>
+        <p class="small" style="line-height:1.6">수정 내용과 최종 책임자 표시</p>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--blue-wash); border-color:var(--blue); text-align:center; padding:18px">
+      <div style="font-size:15px; font-weight:700; color:var(--blue)">검증은 AI의 반대가 아니라, AI를 실제 작업에 포함시키기 위한 조건</div>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">14</div>
+</section>
+
+<!-- ============================================================
+     15 · 실습 과제
+     레이아웃: 좌 과업 + 우 완성 조건
+     ============================================================ -->
+<section class="slide" id="s15">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">LAB</span></div>
+      <h2 class="h-md">실습: 강의자료를 학습 페이지로 변환</h2>
+      <p class="small">이 PDF 자체를 입력 자료로 사용해 결과물을 설계</p>
+    </div>
+
+    <div class="row" style="gap:36px; align-items:stretch; margin:auto 0">
+      <div class="fill card card--flat">
+        <div class="card__k">과업</div>
+        <div style="margin-top:10px">
+          <div class="li">18장 강의자료의 개념 구조를 한 화면에 시각화</div>
+          <div class="li">벤치마크와 가상 설문을 각각 별도 차트로 구성</div>
+          <div class="li">모든 수치에 원문 슬라이드 번호를 연결</div>
+          <div class="li">5문항 퀴즈와 오답 해설을 추가</div>
+        </div>
+      </div>
+
+      <div style="width:360px; flex:0 0 auto">
+        <div class="card__k" style="margin-bottom:14px">완성 조건</div>
+        <div class="col" style="gap:12px">
+          <div class="numrow"><span class="numbadge">1</span><span class="body" style="font-weight:700; color:var(--ink)">출처 슬라이드 표시</span></div>
+          <div class="numrow"><span class="numbadge">2</span><span class="body" style="font-weight:700; color:var(--ink)">실제 / 가상 데이터 구분</span></div>
+          <div class="numrow"><span class="numbadge" style="background:var(--blue)">3</span><span class="body" style="font-weight:700; color:var(--ink)">모바일 화면 작동 확인</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">15</div>
+</section>
+
+<!-- ============================================================
+     16 · 토론
+     레이아웃: 카드 4 + 하단 인용
+     ============================================================ -->
+<section class="slide slide--parchment" id="s16">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">DISCUSSION</span></div>
+      <h2 class="h-md">토론: 어디까지 맡길 것인가</h2>
+      <p class="small">효율이 커질수록 위임의 기준을 더 구체적으로 정해야 함</p>
+    </div>
+
+    <div class="g4 grid" style="gap:18px">
+      <div class="card">
+        <div class="card__k" style="color:var(--blue)">정확성</div>
+        <p class="body" style="margin-top:10px; font-size:15px">출처가 맞지만 해석이 틀렸다면?</p>
+      </div>
+      <div class="card">
+        <div class="card__k" style="color:var(--blue)">저작권</div>
+        <p class="body" style="margin-top:10px; font-size:15px">강의자료를 변환해 공유해도 되는가?</p>
+      </div>
+      <div class="card">
+        <div class="card__k" style="color:var(--blue)">개인정보</div>
+        <p class="body" style="margin-top:10px; font-size:15px">팀원 인터뷰를 동의 없이 입력한다면?</p>
+      </div>
+      <div class="card">
+        <div class="card__k" style="color:var(--blue)">저자성</div>
+        <p class="body" style="margin-top:10px; font-size:15px">AI가 만든 구조를 내 과제로 제출한다면?</p>
+      </div>
+    </div>
+
+    <div class="col center" style="text-align:center; gap:6px">
+      <p class="pullquote" style="font-size:26px">“할 수 있는가”와 <span class="q">“해도 되는가”</span>는 다른 질문이다.</p>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">16</div>
+</section>
+
+<!-- ============================================================
+     17 · 미니 퀴즈
+     레이아웃: 번호 목록 5
+     ============================================================ -->
+<section class="slide" id="s17">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">CHECK</span></div>
+      <h2 class="h-md">미니 퀴즈</h2>
+      <p class="small">각 문항을 누르면 정답과 근거 슬라이드가 표시되는 형태로 변환</p>
+    </div>
+
+    <div class="col" style="gap:12px">
+      <div class="card numrow" style="padding:18px 24px"><span class="numbadge">1</span><span class="body" style="color:var(--ink)">유창한 답변은 사실성을 보장한다. <b style="color:var(--blue)">O / X</b></span></div>
+      <div class="card numrow" style="padding:18px 24px"><span class="numbadge">2</span><span class="body" style="color:var(--ink)">검색 · 변환 · 실행 중 검증 부담이 가장 큰 층위는?</span></div>
+      <div class="card numrow" style="padding:18px 24px"><span class="numbadge">3</span><span class="body" style="color:var(--ink)">서로 다른 벤치마크 점수를 평균 내면 안 되는 이유는?</span></div>
+      <div class="card numrow" style="padding:18px 24px"><span class="numbadge">4</span><span class="body" style="color:var(--ink)">검증 프로토콜의 ‘반증’ 단계에서 해야 할 일은?</span></div>
+      <div class="card numrow" style="padding:18px 24px"><span class="numbadge">5</span><span class="body" style="color:var(--ink)">가상 설문과 실제 조사 결과를 구분해야 하는 이유는?</span></div>
+    </div>
+
+    <div class="row between center">
+      <span class="small">정답은 변환 페이지에서 확인</span>
+      <span class="src">근거 슬라이드 : 04 · 06 · 09 · 14 · 12~13</span>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">17</div>
+</section>
+
+<!-- ============================================================
+     18 · 마무리 · 과제와 출처
+     레이아웃: 다크 + 제출물 3 + 출처
+     ============================================================ -->
+<section class="slide slide--dark" id="s18">
+  <div class="slide__inner col between">
+    <div class="slide-head">
+      <div class="marker"><span class="marker__label">WRAP-UP</span></div>
+      <h2 class="h-md" style="color:#fff">과제 및 출처</h2>
+      <p class="small">학습 페이지를 만든 뒤, 정확성보다 먼저 실패 가능성을 기록</p>
+    </div>
+
+    <div class="row" style="gap:44px; align-items:flex-start">
+      <div class="fill">
+        <div class="card__k" style="color:var(--blue-on-dark); margin-bottom:12px">제출물</div>
+        <div class="li" style="color:#d6d7db">인터랙티브 학습 페이지 1개</div>
+        <div class="li" style="color:#d6d7db">원문과 다른 내용 수정 기록 3개</div>
+        <div class="li" style="color:#d6d7db">AI에 맡기지 않은 판단 1개</div>
+      </div>
+
+      <div style="width:470px; flex:0 0 auto">
+        <div class="card__k" style="color:var(--blue-on-dark); margin-bottom:12px">Source</div>
+        <p class="small" style="color:#a6a7ac; line-height:1.7">Google. (2026.08.13). Introducing Gemini 3.7 Flash.<br>blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/</p>
+        <p class="small" style="color:#8a8b90; margin-top:12px">9쪽 벤치마크 수치와 8쪽 사례 설명의 출처</p>
+      </div>
+    </div>
+
+    <div class="card" style="background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.14); text-align:center; padding:18px">
+      <div style="font-size:14px; font-weight:700; color:#ffd591">12~13쪽의 n=120 데이터는 콘텐츠 실험용 가상 데이터이며 실제 조사로 인용할 수 없음</div>
+    </div>
+  </div>
+  <div class="slide__foot">수업용 예시 자료 · 실제 강의자료 아님</div>
+  <div class="slide__no">18</div>
+</section>
+
+</div><!-- /.deck -->
+
+<script>
+(function () {
+  'use strict';
+
+  function fit() {
+    var vw = document.documentElement.clientWidth;
+    var z = Math.min(1, (vw - 48) / 1280);
+    document.documentElement.style.setProperty('--z', z.toFixed(4));
+  }
+  fit();
+  window.addEventListener('resize', fit);
+
+  var EDITABLE_SELECTOR = [
+    'h1', 'h2', '.lead', '.body', '.small', '.tiny', '.src', '.eyebrow',
+    '.marker__label', '.divider-en', '.divider-num', '.card__k', '.stat__n', '.stat__l',
+    '.quote-real', '.pullquote', '.li', '.flow__chip', '.tag-pill', '.numpill', '.tbd',
+    '.commonwords span', '.tbl td', '.tbl th',
+    '.hbar__name', '.hbar__val', '.neq__a', '.neq__b',
+    '.jstage__no', '.jstage__t', '.jstage__d', '.jstage__role',
+    '.zone__t', '.zone__d', '.fstage__t', '.fstage__d',
+    '.ba__k', '.gauge__top span', '.handoff span',
+    '.h-md', '.h-lg', '.h-title', '.h-hero'
+  ].join(',');
+
+  var STORAGE_KEY = 'ai-literacy-deck-v1';
+  var EXPORT_NAME = 'ai-literacy';
+
+  var deckRoot = document.getElementById('deckRoot');
+  var btnEdit = document.getElementById('btnEdit');
+  var btnHl = document.getElementById('btnHl');
+  var btnExport = document.getElementById('btnExport');
+  var btnReset = document.getElementById('btnReset');
+  var saveStatus = document.getElementById('saveStatus');
+  var fileInput = document.getElementById('imgUploadInput');
+  var activeFrame = null;
+  var originals = {};
+  var saveTimer = null;
+
+  Array.prototype.forEach.call(deckRoot.querySelectorAll('.imgframe'), function (f, i) {
+    f.dataset.frameId = 'f' + i;
+    originals[f.dataset.frameId] = f.innerHTML;
+  });
+
+  (function restore() {
+    var saved = null;
+    try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+    if (saved) { deckRoot.innerHTML = saved; saveStatus.textContent = '저장된 수정 불러옴'; }
+  })();
+
+  function setupFrame(frame) {
+    if (frame.dataset.edInit) return;
+    frame.dataset.edInit = '1';
+    var hint = document.createElement('div');
+    hint.className = 'imgframe__hint';
+    hint.textContent = '클릭 또는 드래그하여 이미지 업로드';
+    frame.appendChild(hint);
+    frame.addEventListener('click', function (e) {
+      if (!document.body.classList.contains('edit-mode')) return;
+      if (e.target.closest('.imgframe__remove')) return;
+      activeFrame = frame; fileInput.click();
+    });
+    ['dragenter', 'dragover'].forEach(function (evt) {
+      frame.addEventListener(evt, function (e) {
+        if (!document.body.classList.contains('edit-mode')) return;
+        e.preventDefault(); frame.classList.add('dragover');
+      });
+    });
+    ['dragleave', 'drop'].forEach(function (evt) {
+      frame.addEventListener(evt, function (e) {
+        if (!document.body.classList.contains('edit-mode')) return;
+        e.preventDefault(); frame.classList.remove('dragover');
+      });
+    });
+    frame.addEventListener('drop', function (e) {
+      if (!document.body.classList.contains('edit-mode')) return;
+      var file = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) loadImage(frame, file);
+    });
+  }
+  Array.prototype.forEach.call(deckRoot.querySelectorAll('.imgframe'), setupFrame);
+
+  function loadImage(frame, file) {
+    if (!file.type || file.type.indexOf('image/') !== 0) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      Array.prototype.slice.call(frame.childNodes).forEach(function (n) {
+        if (n.nodeType === 1 && (n.classList.contains('imgframe__hint') || n.classList.contains('imgframe__remove'))) return;
+        frame.removeChild(n);
+      });
+      var img = document.createElement('img');
+      img.className = 'uploaded'; img.src = reader.result;
+      frame.insertBefore(img, frame.firstChild);
+      var removeBtn = frame.querySelector('.imgframe__remove');
+      if (!removeBtn) {
+        removeBtn = document.createElement('button');
+        removeBtn.type = 'button'; removeBtn.className = 'imgframe__remove'; removeBtn.textContent = '×';
+        removeBtn.addEventListener('click', function (e) { e.stopPropagation(); restoreFrame(frame); });
+        frame.appendChild(removeBtn);
+      }
+      scheduleSave();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function restoreFrame(frame) {
+    var id = frame.dataset.frameId;
+    frame.innerHTML = originals[id] !== undefined ? originals[id] : '';
+    frame.removeAttribute('data-ed-init'); setupFrame(frame); scheduleSave();
+  }
+
+  fileInput.addEventListener('change', function () {
+    var file = fileInput.files[0];
+    if (file && activeFrame) loadImage(activeFrame, file);
+    fileInput.value = '';
+  });
+
+  function setEditMode(on) {
+    document.body.classList.toggle('edit-mode', on);
+    Array.prototype.forEach.call(deckRoot.querySelectorAll(EDITABLE_SELECTOR), function (el) {
+      el.setAttribute('contenteditable', on ? 'true' : 'false');
+      el.classList.toggle('ed-text', on);
+    });
+    btnEdit.classList.toggle('on', on);
+    btnEdit.textContent = on ? '수정 모드 끄기' : '수정 모드';
+  }
+  btnEdit.addEventListener('click', function () {
+    setEditMode(!document.body.classList.contains('edit-mode'));
+  });
+
+  btnHl.addEventListener('mousedown', function (e) { e.preventDefault(); });
+  btnHl.addEventListener('click', function () {
+    if (!document.body.classList.contains('edit-mode')) { saveStatus.textContent = '먼저 수정 모드를 켜세요'; return; }
+    var sel = window.getSelection();
+    if (!sel || !sel.rangeCount || sel.isCollapsed) { saveStatus.textContent = '강조할 텍스트를 선택하세요'; return; }
+    var range = sel.getRangeAt(0);
+    if (!range.commonAncestorContainer || !deckRoot.contains(range.commonAncestorContainer)) return;
+    var node = range.commonAncestorContainer;
+    var el = node.nodeType === 1 ? node : node.parentNode;
+    var hlAncestor = el.closest ? el.closest('.hl') : null;
+    if (hlAncestor) {
+      var parent = hlAncestor.parentNode;
+      while (hlAncestor.firstChild) parent.insertBefore(hlAncestor.firstChild, hlAncestor);
+      parent.removeChild(hlAncestor);
+      parent.normalize();
+    } else {
+      var span = document.createElement('span');
+      span.className = 'hl';
+      try { range.surroundContents(span); }
+      catch (err) { var frag = range.extractContents(); span.appendChild(frag); range.insertNode(span); }
+    }
+    sel.removeAllRanges();
+    scheduleSave();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    var el = e.target.closest && e.target.closest('h1,h2');
+    if (!el || !el.isContentEditable) return;
+    e.preventDefault();
+    var sel = window.getSelection();
+    if (!sel.rangeCount) return;
+    var range = sel.getRangeAt(0);
+    range.deleteContents();
+    var br = document.createElement('br');
+    range.insertNode(br);
+    range.setStartAfter(br); range.setEndAfter(br);
+    sel.removeAllRanges(); sel.addRange(range);
+    scheduleSave();
+  });
+
+  function scheduleSave() {
+    clearTimeout(saveTimer);
+    saveStatus.textContent = '저장 중…';
+    saveTimer = setTimeout(function () {
+      try {
+        localStorage.setItem(STORAGE_KEY, deckRoot.innerHTML);
+        var t = new Date();
+        saveStatus.textContent = '저장됨 · ' + String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0');
+      } catch (e) { saveStatus.textContent = '저장 실패(용량)'; }
+    }, 600);
+  }
+  document.addEventListener('input', function (e) {
+    if (e.target.closest && e.target.closest('#deckRoot')) scheduleSave();
+  });
+
+  btnReset.addEventListener('click', function () {
+    if (!window.confirm('로컬에 저장된 수정 내용을 지우고 원본으로 되돌릴까요?')) return;
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    location.reload();
+  });
+
+  btnExport.addEventListener('click', function () {
+    var wasEdit = document.body.classList.contains('edit-mode');
+    if (wasEdit) setEditMode(false);
+    var clone = document.documentElement.cloneNode(true);
+    var cToolbar = clone.querySelector('#toolbar'); if (cToolbar) cToolbar.remove();
+    var cInput = clone.querySelector('#imgUploadInput'); if (cInput) cInput.remove();
+    Array.prototype.forEach.call(clone.querySelectorAll('.imgframe__hint, .imgframe__remove'), function (n) { n.remove(); });
+    Array.prototype.forEach.call(clone.querySelectorAll('.imgframe'), function (f) { f.removeAttribute('data-ed-init'); });
+    var cBody = clone.querySelector('body'); if (cBody) cBody.classList.remove('edit-mode');
+    var html = '<!doctype html>\n' + clone.outerHTML;
+    var blob = new Blob([html], { type: 'text/html' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    var ts = new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-');
+    a.href = url; a.download = EXPORT_NAME + '-' + ts + '.html';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    if (wasEdit) setEditMode(true);
+  });
+})();
+</script>
+</body>
+</html>

@@ -94,6 +94,13 @@ Node 모듈이 전역에 있는 환경이면 `NODE_PATH`를 앞에 붙인다.
 NODE_PATH=/opt/node22/lib/node_modules node build/qa/fit.js
 ```
 
+QA 스크립트는 다른 덱도 검사할 수 있다. `DECK`에 경로를 준다.
+
+```bash
+DECK=../lectures/ai-literacy/index.html node build/qa/fit.js
+DECK=../lectures/ai-literacy/index.html node build/qa/shot.js s12
+```
+
 ---
 
 ## 3. 내 프로젝트로 바꾸기
